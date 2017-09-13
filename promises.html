@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>AJAX Promises Demo</title>
+</head>
+
+<body>
+
+    <script src="jquery-3.2.1.js"></script>
+    <script>
+        $("body").append("<h1> Loading... </h1>")
+
+
+        fetchPostsForSubreddit('javascript').then(function(results) {
+            console.log(results);
+
+            $("h1").remove();
+
+            $.each(results.data.children, function(key, value) {
+                $("body").append("<p>" + value.data.title + "</p>")
+            });
+
+        }, function(error) {
+            console.log('An error occured');
+        });
+
+        function fetchPostsForSubreddit(subreddit, callbackFunction) {
+            return $.getJSON('https://reddit.com/r/' + subreddit + '.json');
+        }
+    </script>
+</body>
+
+</html>
